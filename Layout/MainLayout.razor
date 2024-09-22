@@ -1,0 +1,51 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+<PageTitle>My App</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private ThemePlugin _themePlugin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Inicializar el plugin de tema
+            _themePlugin = new ThemePlugin(JSRuntime);
+
+            // Cambiar el tema automáticamente al cargar la página
+            await ChangeTheme("green", "blue");
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores
+            Console.Error.WriteLine($"Error al inicializar el tema: {ex.Message}");
+        }
+    }
+
+    private async Task ChangeTheme(string color1, string color2)
+    {
+        try
+        {
+            // Cambiar los colores del tema usando el plugin
+            await _themePlugin.SetThemeColors(color1, color2);
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores
+            Console.Error.WriteLine($"Error al cambiar el tema: {ex.Message}");
+        }
+    }
+}

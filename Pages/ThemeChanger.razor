@@ -1,0 +1,79 @@
+@page "/themechanger"
+@inject IJSRuntime JSRuntime
+
+<h3>Cambiar Tema</h3>
+<button @onclick="ChangeToRedAndBlue">Cambiar a Rojo y Azul</button>
+
+@code {
+    private ThemePlugin _themePlugin;
+
+
+
+    protected override void OnInitialized()
+
+    {
+
+        // Inicializar el plugin de tema
+
+        _themePlugin = new ThemePlugin(JSRuntime);
+
+    }
+
+
+
+    // Función específica para cambiar el tema a rojo y azul
+
+    private async Task ChangeToRedAndBlue()
+
+    {
+
+        try
+
+        {
+
+            await ChangeTheme("red", "blue");
+
+        }
+
+        catch (Exception ex)
+
+        {
+
+            // Manejo de errores
+
+            Console.Error.WriteLine($"Error al cambiar el tema a rojo y azul: {ex.Message}");
+
+        }
+
+    }
+
+
+
+    // Función general para cambiar el tema con colores dados
+
+    private async Task ChangeTheme(string color1, string color2)
+
+    {
+
+        try
+
+        {
+
+            // Cambiar los colores del tema usando el plugin
+
+            await _themePlugin.SetThemeColors(color1, color2);
+
+        }
+
+        catch (Exception ex)
+
+        {
+
+            // Manejo de errores
+
+            Console.Error.WriteLine($"Error al cambiar el tema: {ex.Message}");
+
+        }
+
+    }
+}
